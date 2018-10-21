@@ -1,9 +1,9 @@
 
-INSERT INTO burgers (burger_name, devoured)
-VALUES ("Pork Burger", false);
+INSERT INTO burgers (burger_name)
+VALUES ("Pork Burger");
 
 INSERT INTO burgers (burger_name)
-VALUES ("Fish Burger", false);
+VALUES ("Fish Burger");
 
 INSERT INTO burgers (burger_name)
-VALUES ("Chicken Burger", false);
+VALUES ("Chicken Burger");

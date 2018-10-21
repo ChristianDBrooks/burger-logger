@@ -49,7 +49,7 @@ app.get("/burgers", function (req, res) {
             if (err) {
                 throw err;
             }
-            console.log(result1, result2);
+            console.log( "Their are: " + result1.length + " items in not devoured.", "Their are: " + result2.length + " items in devoured.");
             res.render("index",
             {
                 notDevoured: result1,
@@ -70,7 +70,8 @@ app.post("/burgers", function (req, res) {
 });
 
 app.put("/burgers/:id", function(req, res) {
-    connection.query("UPDATE burgers SET devour = true WHERE id = ?", [req.params.id], function(err, result) {
+    console.log("The put route works!");
+    connection.query("UPDATE burgers SET devoured = true WHERE id = ?", [req.params.id], function(err, result) {
       if (err) {
         // If an error occurred, send a generic server failure
         return res.status(500).end();
@@ -79,9 +80,26 @@ app.put("/burgers/:id", function(req, res) {
         // If no rows were changed, then the ID must not exist, so 404
         return res.status(404).end();
       }
-      res.reload();
     });
-  });
+    console.log("Redirecting to '/burgers'!");
+
+    res.status(200).end();
+});
+
+app.delete("/burgers", function(req, res) {
+    console.log("The put route works!");
+    connection.query("DELETE FROM burgers WHERE devoured = true", function(err, result) {
+      if (err) {
+        // If an error occurred, send a generic server failure
+        return res.status(500).end();
+      }
+      else if (result.changedRows === 0) {
+        // If no rows were changed, then the ID must not exist, so 404
+        return res.status(404).end();
+      }
+    });
+    res.status(200).end();
+});
 
 // CATCH ALL
 // app.get("*", function(req, res) {

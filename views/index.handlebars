@@ -1,32 +1,32 @@
-<div class="jumbotron jumbotron-fluid">
+<div class="jumbotron jumbotron-fluid bg-primary text-color-light">
     <div class="container">
-        <h1 class="display-4">Fluid jumbotron</h1>
-        <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+        <h1 class="display-4">Whats on the menu?</h1>
+        <p class="lead">In this app, you can create your own burger, devour any creation you make, or erase it all!</p>
+        <hr class="my-4">
+        <p>Go ahead and try adding something below!</p>
+        <form class="form-inline my-2 my-lg-0" action="/burgers" method="POST">
+            <input class="form-control mr-sm-2" type="text" name="burger" placeholder="Name of the burger!">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Add Burger</button>
+        </form>
     </div>
 </div>
 <div class="container mb-5">
-    <div class="row mb-3">
-        <div class="col col-12 text-center">
-            <form class="form-inline my-2 my-lg-0" action="/burgers" method="POST">
-                <input class="form-control mr-sm-2" type="text" name="burger" placeholder="Name of the burger!">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Add Burger</button>
-            </form>
-        </div>
-    </div>
-    <div class="row">
+    <div class="row mt-3">
         {{!-- Not Devoured List --}}
         <div class="col col-6 text-center">
+            <h3>Fresh Burgers!</h3>
             <ul class="list-group">
                 {{#each notDevoured}}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     {{burger_name}}
-                    <span class="badge badge-primary badge-pill devour" data-id="{{id}}">Devour!</span>
+                    <span class="badge badge-primary badge-pill devour" data-id="{{id}}">Devour! &times;</span>
                 </li>
                 {{/each}}
             </ul>
         </div>
         {{!-- Devoured List --}}
         <div class="col col-6 text-center">
+            <h3>Devoured! Burgers!</h3>
             <ul class="list-group">
                 {{#each devoured}}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -34,6 +34,12 @@
                 </li>
                 {{/each}}
             </ul>
+        </div>
+        <div class="row mt-3">
+            <div class="col col-12">
+                <p>If you wish you hadn't eatin all those burgers go ahead and erase time...</p>
+                <button class="btn btn-dark" id="clear">Throw Up!</button>
+            </div>
         </div>
     </div>
 </div>
