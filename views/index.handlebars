@@ -1,0 +1,39 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Fluid jumbotron</h1>
+        <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+    </div>
+</div>
+<div class="container mb-5">
+    <div class="row mb-3">
+        <div class="col col-12 text-center">
+            <form class="form-inline my-2 my-lg-0" action="/burgers" method="POST">
+                <input class="form-control mr-sm-2" type="text" name="burger" placeholder="Name of the burger!">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Add Burger</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        {{!-- Not Devoured List --}}
+        <div class="col col-6 text-center">
+            <ul class="list-group">
+                {{#each notDevoured}}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{burger_name}}
+                    <span class="badge badge-primary badge-pill devour" data-id="{{id}}">Devour!</span>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        {{!-- Devoured List --}}
+        <div class="col col-6 text-center">
+            <ul class="list-group">
+                {{#each devoured}}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{burger_name}}
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>
