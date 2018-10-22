@@ -18,14 +18,18 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 var mysql = require("mysql");
-
-var connection = mysql.createConnection({
-    host: "localhost",
-    port: 8889,
-    user: "root",
-    password: "root",
-    database: "burgers_db"
-});
+var connection;
+if (process.env.JAWSDB_URL) {
+    connection = mysql.createConnection(process.env.JAWSDB_URL);
+} else {
+    connection = mysql.createConnection({
+        host: "localhost",
+        port: 8889,
+        user: "root",
+        password: "root",
+        database: "burgers_db"
+    });
+}
 
 connection.connect(function (err) {
     if (err) {
@@ -49,12 +53,12 @@ app.get("/burgers", function (req, res) {
             if (err) {
                 throw err;
             }
-            console.log( "Their are: " + result1.length + " items in not devoured.", "Their are: " + result2.length + " items in devoured.");
+            console.log("Their are: " + result1.length + " items in not devoured.", "Their are: " + result2.length + " items in devoured.");
             res.render("index",
-            {
-                notDevoured: result1,
-                devoured: result2
-            })
+                {
+                    notDevoured: result1,
+                    devoured: result2
+                })
         });
     });
 })
@@ -69,34 +73,34 @@ app.post("/burgers", function (req, res) {
     });
 });
 
-app.put("/burgers/:id", function(req, res) {
+app.put("/burgers/:id", function (req, res) {
     console.log("The put route works!");
-    connection.query("UPDATE burgers SET devoured = true WHERE id = ?", [req.params.id], function(err, result) {
-      if (err) {
-        // If an error occurred, send a generic server failure
-        return res.status(500).end();
-      }
-      else if (result.changedRows === 0) {
-        // If no rows were changed, then the ID must not exist, so 404
-        return res.status(404).end();
-      }
+    connection.query("UPDATE burgers SET devoured = true WHERE id = ?", [req.params.id], function (err, result) {
+        if (err) {
+            // If an error occurred, send a generic server failure
+            return res.status(500).end();
+        }
+        else if (result.changedRows === 0) {
+            // If no rows were changed, then the ID must not exist, so 404
+            return res.status(404).end();
+        }
     });
     console.log("Redirecting to '/burgers'!");
 
     res.status(200).end();
 });
 
-app.delete("/burgers", function(req, res) {
+app.delete("/burgers", function (req, res) {
     console.log("The put route works!");
-    connection.query("DELETE FROM burgers WHERE devoured = true", function(err, result) {
-      if (err) {
-        // If an error occurred, send a generic server failure
-        return res.status(500).end();
-      }
-      else if (result.changedRows === 0) {
-        // If no rows were changed, then the ID must not exist, so 404
-        return res.status(404).end();
-      }
+    connection.query("DELETE FROM burgers WHERE devoured = true", function (err, result) {
+        if (err) {
+            // If an error occurred, send a generic server failure
+            return res.status(500).end();
+        }
+        else if (result.changedRows === 0) {
+            // If no rows were changed, then the ID must not exist, so 404
+            return res.status(404).end();
+        }
     });
     res.status(200).end();
 });
